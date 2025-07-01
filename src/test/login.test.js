@@ -10,4 +10,8 @@ describe("Page Title", () => {
         console.log(`Page title in the browser: ${title}`)
         await expect(browser).toHaveTitle("Swag Labs");
     });
+
+    it("Test Login form with empty username input", async () => {
+        await $("#user-name").waitForDisplayed();
+    })
 })
