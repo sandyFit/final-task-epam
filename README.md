@@ -62,7 +62,7 @@ This project automates login functionality testing on [SauceDemo](https://www.sa
 │ └── logger.js
 ├── package.json
 └── README.md
-
+```
 
 ---
 
