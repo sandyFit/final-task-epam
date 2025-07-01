@@ -1,4 +1,4 @@
-# Test Automation with JavaScript - Final Task 🚀
+# Test Automation with JavaScript - Final Task 
 
 ## Overview
 This project automates login functionality testing on [SauceDemo](https://www.saucedemo.com/) using **WebDriverIO v9** and JavaScript. It covers core login scenarios and follows modern test automation practices using the Page Object Model.
@@ -46,14 +46,14 @@ This project automates login functionality testing on [SauceDemo](https://www.sa
 ---
 
 ## Project Structure
-
+```plaintext
 ├── src/
 │ ├── config/
 │ │ └── wdio.conf.js
 │ ├── pages/
-│ │ ├── BasePage.js
-│ │ ├── LoginPage.js
-│ │ └── DashboardPage.js
+│ │ ├── basePage.js
+│ │ ├── loginPage.js
+│ │ └── dashboardPage.js
 │ ├── data/
 │ │ └── testData.js
 │ ├── test/
