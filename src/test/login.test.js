@@ -1,34 +1,39 @@
+const { pages } = require("../po/pages");
+
 describe("Login Page", () => {
     beforeEach(async () => {
-        await browser.url("https://www.saucedemo.com/");
+        await pages("login").open();
     });
+    
 
     /**
-     * @test Attempts login with empty username and password inputs.
+     * @test Perform login with empty credentials (UC-1)
      */
-    it("UC-1: Login with Empty Credentials", async () => {
-        // Wait for elements to be displayed
-        await $("#user-name").waitForDisplayed();
-        await $("#password").waitForDisplayed();
-        await $("#login-button").waitForDisplayed();
+    it.only("UC-1: Login with Empty Credentials", async () => {
+        // Clear inputs
+        await pages("login").clearAllInputs();
 
-        // Click button with empty fields
-        await $("#login-button").click();
+        // Verify the inputs are empty
+        const isUsernameEmpty = await pages("login").isUsernameInputEmpty();
+        const isPasswordEmpty = await pages("login").isPasswordInputEmpty();
 
-        // Verify error message appears
-        const errorMessage = await $("[data-test='error']");
+        expect(isUsernameEmpty).toBe(true);
+        expect(isPasswordEmpty).toBe(true);
+
+        // Attempt login
+        await pages("login").clickLoginButton();
 
         // Verify error message is displayed
-        await expect(errorMessage).toBeDisplayed();
+        const isErrorDisplayed = await pages("login").isErrorMessageDisplayed();
+        expect(isErrorDisplayed).toBe(true);
 
-        // Verify it contains the expected message
-        const errorText = await errorMessage.getText();
-        console.log("Actual error message:", errorText);
-        expect(errorText).toContain("Username is required");
+        // Verify error contains the expected message
+        const errorContainsMessage = await pages("login").errorContainsExpectedMessage("Username is required");
+        expect(errorContainsMessage).toBe(true);
     });
 
     /**
-     * @test Attempts login with empty password input.
+     * @test Perform login with username only (UC-2)
      */
     it("UC-2: Login with Username Only", async () => {
         await $("#user-name").waitForDisplayed();
@@ -48,7 +53,7 @@ describe("Login Page", () => {
     });
 
     /**
-     * @test Attempts login with valid credentials.
+     * @test Perform complete login with valid credentials (UC-3).
      */
     it("UC-3: Login with Valid Credentials", async () => {
         await $("#user-name").waitForDisplayed();
@@ -61,5 +66,4 @@ describe("Login Page", () => {
 
         await expect(browser).toHaveTitle("Swag Labs");
     });
-
 });

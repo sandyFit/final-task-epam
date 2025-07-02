@@ -73,6 +73,27 @@ class BasePage {
         el.waitForDisplayed();
         return el.getText();
     }
+
+    /**
+    * Get attribute value of an element
+    * @param selector - CSS selector of the element
+    * @param attribute - Attribute name
+    * @returns {string} - Attribute value
+    */
+    async getElementAttribute(selector, attribute) {
+        console.log(`🏷️ Getting attribute '${attribute}' from element: ${selector}`)
+        try {
+            const element = await $(selector)
+            await element.waitForDisplayed({ timeout: 5000 })
+            const value = await element.getAttribute(attribute)
+            const attributeValue = value || ''
+            console.log(`Attribute '${attribute}' value: "${attributeValue}"`)
+            return attributeValue
+        } catch (error) {
+            console.log(`Failed to get attribute '${attribute}' from ${selector}: ${error}`)
+            throw new Error(`Unable to get attribute '${attribute}' from element '${selector}': ${error}`)
+        }
+    }
 }
 
 module.exports = BasePage;
