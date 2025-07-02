@@ -1,17 +1,65 @@
-describe("Page Title", () => {
+describe("Login Page", () => {
     beforeEach(async () => {
-        browser.url("https://www.saucedemo.com/")
-    })
+        await browser.url("https://www.saucedemo.com/");
+    });
+
     /**
-    * @test Validates the page title of the inal Test .
-    */
-    it("Check page title", async () => {
-        const title = await browser.getTitle();
-        console.log(`Page title in the browser: ${title}`)
+     * @test Attempts login with empty username and password inputs.
+     */
+    it("UC-1: Login with Empty Credentials", async () => {
+        // Wait for elements to be displayed
+        await $("#user-name").waitForDisplayed();
+        await $("#password").waitForDisplayed();
+        await $("#login-button").waitForDisplayed();
+
+        // Click button with empty fields
+        await $("#login-button").click();
+
+        // Verify error message appears
+        const errorMessage = await $("[data-test='error']");
+
+        // Verify error message is displayed
+        await expect(errorMessage).toBeDisplayed();
+
+        // Verify it contains the expected message
+        const errorText = await errorMessage.getText();
+        console.log("Actual error message:", errorText);
+        expect(errorText).toContain("Username is required");
+    });
+
+    /**
+     * @test Attempts login with empty password input.
+     */
+    it("UC-2: Login with Username Only", async () => {
+        await $("#user-name").waitForDisplayed();
+        await $("#password").waitForDisplayed();
+        await $("#login-button").waitForDisplayed();
+
+        await $("#user-name").setValue("standard_user");
+        await $("#login-button").click();
+
+        const errorMessage = await $("[data-test='error']");
+
+        await expect(errorMessage).toBeDisplayed();
+
+        const errorText = await errorMessage.getText();
+        console.log("Actual error message:", errorText);
+        expect(errorText).toContain("Password is required");
+    });
+
+    /**
+     * @test Attempts login with valid credentials.
+     */
+    it("UC-3: Login with Valid Credentials", async () => {
+        await $("#user-name").waitForDisplayed();
+        await $("#password").waitForDisplayed();
+        await $("#login-button").waitForDisplayed();
+
+        await $("#user-name").setValue("standard_user");
+        await $("#password").setValue("secret_sauce");
+        await $("#login-button").click();
+
         await expect(browser).toHaveTitle("Swag Labs");
     });
 
-    it("Test Login form with empty username input", async () => {
-        await $("#user-name").waitForDisplayed();
-    })
-})
+});

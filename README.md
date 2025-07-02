@@ -52,8 +52,8 @@ This project automates login functionality testing on [SauceDemo](https://www.sa
 │ │ └── wdio.conf.js
 │ ├── pages/
 │ │ ├── basePage.js
-│ │ ├── loginPage.js
-│ │ └── dashboardPage.js
+│ │ ├── dashboardPage.js
+│ │ └── loginPage.js
 │ ├── data/
 │ │ └── testData.js
 │ ├── test/
@@ -70,7 +70,7 @@ This project automates login functionality testing on [SauceDemo](https://www.sa
 
 ### Prerequisites
 - Node.js v16+  
-- Chrome browser installed and in PATH
+- Chrome and Edge browsers installed 
 
 ### NPM Scripts
 
