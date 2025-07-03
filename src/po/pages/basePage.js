@@ -54,13 +54,14 @@ class BasePage {
     }
 
     /**
-     * Clear the value of a given input field
+     * Clear the value of a given input field - WORKING VERSION FOR SAUCEDEMO
      * @param {string} selector - The selector of the input element
-     */
-    clearText(selector) {
-        const el = $(selector);
-        el.waitForDisplayed();
-        el.clearValue();
+    */
+    async clearText(selector) {
+        const el = await $(selector);
+        await el.waitForDisplayed();
+        await el.setValue(''); // This is the ONLY reliable way for SauceDemo
+        console.log(`✅ Successfully cleared field: ${selector}`);
     }
 
     /**
